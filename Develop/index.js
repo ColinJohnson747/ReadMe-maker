@@ -1,27 +1,71 @@
 const fs = require("fs");
 const axios = require("axios");
 const inquirer = require("inquirer");
+const util = require("util");
 
-function usernameAndAvatar() {
-  return inquirer
-    .prompt({
-      message: "Enter your GitHub username:",
-      name: "username",
-    })
-    .then(function ({ username }) {
-      const queryUrl = `https://api.github.com/users/${username}/repos`;
+const writeFileAsync = util.promisify(fs.writeFile);
 
-      axios.get(queryUrl).then(function (res) {
-        let amountOfRepos = res.data.length;
+//Global Object Definition
 
-        let chosenRepoPosition = Math.floor(
-          Math.random() * (amountOfRepos + 1)
-        );
+const questions = [
+  {
+    type: "input",
+    message: "Enter your GitHub username.",
+    name: "username",
+  },
+  {
+    type: "input",
+    message: "What is the name of your project?",
+    name: "title",
+  },
+  {
+    type: "input",
+    message: "Please give a brief description of your project.",
+    name: "description",
+  },
+  {
+    type: "input",
+    message: "List out instructions for operation or installation.",
+    name: "Installation",
+  },
+  {
+    type: "input",
+    message: "Please give scenarios in which it can be used.",
+    name: "usage",
+  },
+  {
+    type: "input",
+    message: "Write out an licensing information that you wish.",
+    name: "licensing",
+  },
+  {
+    type: "input",
+    message: "List out any contributors, yourself included.",
+    name: "contributing",
+  },
+  {
+    type: "input",
+    message: "Does the repo contain any written tests?",
+    name: "tests",
+  },
+];
 
-        const exampleRepo = res.data[chosenRepoPosition].name;
-        //const avatar = res.data[chosenRepoPosition].avatar_url
-      });
-    });
+function promptUser() {
+  return inquirer.prompt(questions);
+}
+function generateMarkdown(answers) {
+  return `#${answers.title}`;
+}
+async function init() {
+  try {
+    const answers = await promptUser();
+
+    const markdown = generateMarkdown(answers);
+
+    await writeFileAsync("test.md", markdown);
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-usernameAndAvatar();
+init();
