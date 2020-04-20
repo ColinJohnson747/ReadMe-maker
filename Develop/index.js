@@ -5,8 +5,6 @@ const util = require("util");
 
 const writeFileAsync = util.promisify(fs.writeFile);
 
-//Global Object Definition
-
 const questions = [
   {
     type: "input",
@@ -34,8 +32,9 @@ const questions = [
     name: "usage",
   },
   {
-    type: "input",
-    message: "Write out an licensing information that you wish.",
+    type: "list",
+    message: "Please chose a licensing option",
+    choices: ["Public, Commerical", "Non Commerical", "Nonchangeable"],
     name: "licensing",
   },
   {
@@ -54,7 +53,25 @@ function promptUser() {
   return inquirer.prompt(questions);
 }
 function generateMarkdown(answers) {
-  return `#${answers.title}`;
+  return `# ${answers.title}
+
+  ${answers.description}
+
+  ## Installation
+  ${answers.Installation}
+  
+  ## Usage
+  ${answers.usage}
+
+  ## Contributors:
+  ${answers.contributing}
+
+  ## Tests
+  ${answers.tests}
+
+  ## License
+  ${answers.licensing}
+`;
 }
 async function init() {
   try {
