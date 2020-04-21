@@ -1,18 +1,18 @@
-# as
+# Readme Maker
 
-  dasd
+  An easy to use readme makeer for any project
 
   ## Installation
-  as
+  type out node index.js in your terminal, and answer the questions
   
   ## Usage
-  das
+  Nearlly any! good for all projects
 
   ## Contributors:
-  dasd
-
+  Colin Johnson
+ 
   ## Tests
-  as
+  No
 
   ## License
   Creative Commons Attribution 4.0 International Public License

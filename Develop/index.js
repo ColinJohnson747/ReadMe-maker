@@ -147,7 +147,7 @@ function generateMarkdown(answers) {
 
   ## Contributors:
   ${answers.contributing}
-
+ 
   ## Tests
   ${answers.tests}
 
@@ -161,7 +161,7 @@ async function init() {
 
     const markdown = generateMarkdown(answers);
 
-    await writeFileAsync("test.md", markdown);
+    await writeFileAsync("testReadme.md", markdown);
   } catch (err) {}
 }
 
